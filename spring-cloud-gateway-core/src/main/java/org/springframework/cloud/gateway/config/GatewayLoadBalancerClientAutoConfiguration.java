@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.DispatcherHandler;
 
 /**
+ * 生成load balance filter
  * @author Spencer Gibb
  */
 @Configuration

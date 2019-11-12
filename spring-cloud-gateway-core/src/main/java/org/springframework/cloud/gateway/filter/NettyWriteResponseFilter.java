@@ -62,7 +62,7 @@ public class NettyWriteResponseFilter implements GlobalFilter, Ordered {
 		// NOTICE: nothing in "pre" filter stage as CLIENT_RESPONSE_CONN_ATTR is not added
 		// until the NettyRoutingFilter is run
 		// @formatter:off
-		return chain.filter(exchange)
+		return chain.filter(exchange) // 先执行其他filter，然后在通过then来写响应
 				.doOnError(throwable -> cleanup(exchange))
 				.then(Mono.defer(() -> {
 					Connection connection = exchange.getAttribute(CLIENT_RESPONSE_CONN_ATTR);

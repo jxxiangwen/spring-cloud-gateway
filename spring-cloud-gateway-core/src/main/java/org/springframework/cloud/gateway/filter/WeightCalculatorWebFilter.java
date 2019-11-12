@@ -131,7 +131,7 @@ public class WeightCalculatorWebFilter
 		}
 		else if (event instanceof RefreshRoutesEvent && routeLocator != null) {
 			routeLocator.ifAvailable(locator -> locator.getRoutes().subscribe()); // forces
-																					// initialization
+			// 刷新改变的是底层的locator存储，因为caching如果查不到会去底层查询  // initialization
 		}
 
 	}

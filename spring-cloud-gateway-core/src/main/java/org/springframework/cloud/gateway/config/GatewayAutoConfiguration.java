@@ -23,6 +23,7 @@ import com.netflix.hystrix.HystrixObservableCommand;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.resources.ConnectionProvider;
@@ -249,7 +250,7 @@ public class GatewayAutoConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnProperty(name = "spring.cloud.gateway.x-forwarded.enabled", matchIfMissing = true)
+	@ConditionalOnProperty(name = "spring.clouXd.gateway.x-forwarded.enabled", matchIfMissing = true)
 	public XForwardedHeadersFilter xForwardedHeadersFilter() {
 		return new XForwardedHeadersFilter();
 	}
@@ -514,7 +515,6 @@ public class GatewayAutoConfiguration {
 		@Bean
 		@ConditionalOnMissingBean
 		public HttpClient httpClient(HttpClientProperties properties) {
-
 			// configure pool resources
 			HttpClientProperties.Pool pool = properties.getPool();
 
@@ -560,6 +560,10 @@ public class GatewayAutoConfiguration {
 										.to(builder::nonProxyHosts);
 							});
 						}
+						// TODO 使用doOnConnected时候可以满足？
+//						tcpClient.doOnConnected(connection -> {
+//							connection.addHandler(new ReadTimeoutHandler(5000, TimeUnit.MILLISECONDS))
+//						});
 						return tcpClient;
 					});
 

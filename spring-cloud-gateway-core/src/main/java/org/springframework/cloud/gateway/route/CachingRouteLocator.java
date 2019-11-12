@@ -19,6 +19,10 @@ package org.springframework.cloud.gateway.route;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import reactor.cache.CacheFlux;
 import reactor.core.publisher.Flux;
@@ -39,11 +43,20 @@ public class CachingRouteLocator
 
 	private final Map<String, List> cache = new HashMap<>();
 
+	private AtomicInteger count = new AtomicInteger();
+
 	public CachingRouteLocator(RouteLocator delegate) {
 		this.delegate = delegate;
 		routes = CacheFlux.lookup(cache, "routes", Route.class)
 				.onCacheMissResume(() -> this.delegate.getRoutes()
 						.sort(AnnotationAwareOrderComparator.INSTANCE));
+//		ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+//		scheduledExecutorService.scheduleAtFixedRate(() -> {
+//			System.out.println("==============");
+//			System.out.println(count.getAndIncrement() );
+//			routes.subscribe(System.out::println);
+//			System.out.println("==============");
+//		},100,100, TimeUnit.SECONDS);
 	}
 
 	@Override

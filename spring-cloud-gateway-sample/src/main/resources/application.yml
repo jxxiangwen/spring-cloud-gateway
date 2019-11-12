@@ -6,12 +6,17 @@ test:
 
 
 spring:
+  application:
+    name: test-gateway
   jmx:
     enabled: false
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       default-filters:
-      - PrefixPath=/httpbin
       - AddResponseHeader=X-Response-Default-Foo, Default-Bar
 
       routes:
@@ -41,3 +46,12 @@ logging:
     reactor.netty: DEBUG
 
 management.endpoints.web.exposure.include: '*'
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.199.59:6101/eureka/,http://192.168.199.142:6101/eureka/
+

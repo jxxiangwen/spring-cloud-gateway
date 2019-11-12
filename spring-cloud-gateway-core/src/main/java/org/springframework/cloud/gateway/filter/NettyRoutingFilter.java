@@ -147,7 +147,7 @@ public class NettyRoutingFilter implements GlobalFilter, Ordered {
 					// response later NettyWriteResponseFilter
 					exchange.getAttributes().put(CLIENT_RESPONSE_ATTR, res);
 					exchange.getAttributes().put(CLIENT_RESPONSE_CONN_ATTR, connection);
-
+					// TODO 这个response 什么时候设置的
 					ServerHttpResponse response = exchange.getResponse();
 					// put headers and status so filters can modify the response
 					HttpHeaders headers = new HttpHeaders();

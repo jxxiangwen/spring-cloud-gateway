@@ -149,7 +149,7 @@ public class RouteDefinitionRouteLocator
 
 	@SuppressWarnings("unchecked")
 	private List<GatewayFilter> loadGatewayFilters(String id,
-			List<FilterDefinition> filterDefinitions) {
+			List<FilterDefinition> filterDefinitions) {// 将filter定义转成真正的filter
 		List<GatewayFilter> filters = filterDefinitions.stream().map(definition -> {
 			GatewayFilterFactory factory = this.gatewayFilterFactories
 					.get(definition.getName());
